@@ -1,0 +1,7 @@
+{
+  "cmake.generator": "Ninja",
+  "cmake.configureSettings": { "PICO_BOARD": "pico2" },
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/pico-debug/compile_commands.json",
+  "editor.formatOnSave": true,
+  "[c]": { "editor.defaultFormatter": "ms-vscode.cpptools" }
+}

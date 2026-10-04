@@ -1,0 +1,12 @@
+# Tier-a embedded posture: safety-critical checks on, style delegated to
+# clang-format.
+Checks: >
+  bugprone-*,
+  clang-analyzer-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -bugprone-easily-swappable-parameters,
+  -readability-magic-numbers
+WarningsAsErrors: "bugprone-*,clang-analyzer-*"
+FormatStyle: file

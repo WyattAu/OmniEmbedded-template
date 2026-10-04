@@ -1,0 +1,49 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "host-debug",
+      "displayName": "Host tests (native)",
+      "binaryDir": "${sourceDir}/build/host-debug",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "OMNI_HOST": "ON"
+      }
+    },
+    {
+      "name": "pico-debug",
+      "displayName": "RP2350 debug",
+      "binaryDir": "${sourceDir}/build/pico-debug",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PICO_BOARD": "pico2",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "pico-release",
+      "displayName": "RP2350 release",
+      "binaryDir": "${sourceDir}/build/pico-release",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PICO_BOARD": "pico2",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "host-debug", "configurePreset": "host-debug" },
+    { "name": "pico-debug", "configurePreset": "pico-debug" },
+    { "name": "pico-release", "configurePreset": "pico-release" }
+  ],
+  "testPresets": [
+    {
+      "name": "host",
+      "configurePreset": "host-debug",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+# Two personalities, one gate: host tests + cross build + size budgets.
+# HIL (hardware-in-loop) smoke runs on the self-hosted Forgejo runner when
+# a board is attached — allowed to fail so CI never blocks on hardware.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 1 * *" # monthly bitrot (SDK pin drift)
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y cmake ninja-build
+      - run: cmake --preset host-debug && cmake --build build/host-debug && ctest --preset host --test-dir build/host-debug
+
+  pico:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        board: ["pico", "pico2"]
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
+      - run: cmake --preset pico-release -DPICO_BOARD=${{ matrix.board }} && cmake --build build/pico-release -j"$(nproc)"
+      - run: ./scripts/size.sh build/pico-release/omni-firmware.elf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ matrix.board }}
+          path: build/pico-release/omni-firmware.*
+
+  hil-smoke:
+    runs-on: [self-hosted, linux, embedded]
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/build.sh pico-release
+      - run: ./scripts/flash.sh build/pico-release/omni-firmware.uf2
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/check-contract.sh

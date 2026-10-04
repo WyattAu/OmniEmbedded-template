@@ -1,0 +1,8 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "build (host + pico)", "type": "shell", "command": "make build", "group": { "kind": "build", "isDefault": true }, "problemMatcher": "$gcc" },
+    { "label": "test (host)", "type": "shell", "command": "make test", "group": "test", "problemMatcher": "$gcc" },
+    { "label": "ci (all gates)", "type": "shell", "command": "make ci", "problemMatcher": "$gcc" }
+  ]
+}

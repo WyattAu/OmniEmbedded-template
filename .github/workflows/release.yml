@@ -1,0 +1,31 @@
+# Tag → UF2/ELF/BIN artifacts per board, attested.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  attestations: write
+  id-token: write
+
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        board: ["pico", "pico2"]
+    if: ${{ github.repository_owner == 'WyattAu' }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
+      - run: cmake --preset pico-release -DPICO_BOARD=${{ matrix.board }} && cmake --build build/pico-release -j"$(nproc)"
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: "build/pico-release/omni-firmware.*"
+      - run: mkdir -p dist && cp build/pico-release/omni-firmware.* dist/
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*

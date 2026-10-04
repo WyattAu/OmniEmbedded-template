@@ -1,0 +1,6 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    { "name": "Debug host tests", "type": "cppdbg", "request": "launch", "program": "${workspaceFolder}/build/host-debug/host_tests", "MIMode": "gdb", "cwd": "${workspaceFolder}" }
+  ]
+}
