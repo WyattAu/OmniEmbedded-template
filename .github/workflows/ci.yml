@@ -1,6 +1,6 @@
 # Two personalities, one gate: host tests + cross build + size budgets.
-# HIL (hardware-in-loop) smoke runs on the self-hosted Forgejo runner when
-# a board is attached — allowed to fail so CI never blocks on hardware.
+# HIL (hardware-in-loop) smoke lives in .forgejo/workflows/build.yml — it
+# needs the self-hosted embedded runner, which only exists there.
 name: CI
 
 on:
@@ -40,14 +40,6 @@ jobs:
         with:
           name: firmware-${{ matrix.board }}
           path: build/pico-release/omni-firmware.*
-
-  hil-smoke:
-    runs-on: [self-hosted, linux, embedded]
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-      - run: ./scripts/build.sh pico-release
-      - run: ./scripts/flash.sh build/pico-release/omni-firmware.uf2
 
   contract:
     runs-on: ubuntu-latest

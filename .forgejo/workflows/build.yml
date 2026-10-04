@@ -14,3 +14,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Gate (mirrors GitHub CI)
         run: make ci
+
+  # Hardware-in-loop smoke: GitHub has no embedded runner — HIL belongs to
+  # the self-hosted Forgejo estate. continue-on-error so a missing board
+  # never blocks merges.
+  hil-smoke:
+    runs-on: [self-hosted, linux, embedded]
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/build.sh pico-release
+      - run: ./scripts/flash.sh build/pico-release/omni-firmware.uf2
