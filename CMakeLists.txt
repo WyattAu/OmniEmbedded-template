@@ -10,7 +10,7 @@ if(OMNI_HOST)
   add_subdirectory(tests)
 else()
   # PICO_SDK_PATH comes from the preset cache (or the environment).
-  include("$PICO_SDK_PATH/pico_sdk_init.cmake")
+  include("${PICO_SDK_PATH}/pico_sdk_init.cmake")
   pico_sdk_init()
 
   add_executable(omni-firmware src/main.c)
