@@ -30,19 +30,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        board: ["pico", "pico2"]
+        include:
+          - board: pico
+            preset: pico-release
+          - board: pico2
+            preset: pico2-release
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
       - run: |
           ./scripts/ensure-pico-sdk.sh
-          cmake --preset pico-release -DPICO_BOARD=${{ matrix.board }}
-          cmake --build build/pico-release -j"$(nproc)"
-      - run: ./scripts/size.sh build/pico-release/omni-firmware.elf
+          cmake --preset ${{ matrix.preset }}
+          cmake --build build/${{ matrix.preset }} -j"$(nproc)"
+      - run: ./scripts/size.sh build/${{ matrix.preset }}/omni-firmware.elf
       - uses: actions/upload-artifact@v4
         with:
           name: firmware-${{ matrix.board }}
-          path: build/pico-release/omni-firmware.*
+          path: build/${{ matrix.preset }}/omni-firmware.*
 
   contract:
     runs-on: ubuntu-latest

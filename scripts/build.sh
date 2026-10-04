@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 presets=("$@")
-[ ${#presets[@]} -eq 0 ] && presets=(host-debug pico-release)
+[ ${#presets[@]} -eq 0 ] && presets=(host-debug pico-release pico2-release)
 for p in "${presets[@]}"; do
   [[ "$p" == pico-* ]] && ./scripts/ensure-pico-sdk.sh
   cmake --preset "$p"

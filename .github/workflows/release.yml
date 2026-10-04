@@ -16,16 +16,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        board: ["pico", "pico2"]
+        include:
+          - board: pico
+            preset: pico-release
+          - board: pico2
+            preset: pico2-release
     if: ${{ github.repository_owner == 'WyattAu' }}
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
-      - run: cmake --preset pico-release -DPICO_BOARD=${{ matrix.board }} && cmake --build build/pico-release -j"$(nproc)"
+      - run: |
+    ./scripts/ensure-pico-sdk.sh
+    cmake --preset ${{ matrix.preset }}
+    cmake --build build/${{ matrix.preset }} -j"$(nproc)"
       - uses: actions/attest-build-provenance@v2
         with:
-          subject-path: "build/pico-release/omni-firmware.*"
-      - run: mkdir -p dist && cp build/pico-release/omni-firmware.* dist/
+          subject-path: "build/${{ matrix.preset }}/omni-firmware.*"
+      - run: mkdir -p dist && cp build/${{ matrix.preset }}/omni-firmware.* dist/
       - uses: softprops/action-gh-release@v2
         with:
           files: dist/*
