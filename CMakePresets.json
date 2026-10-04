@@ -19,8 +19,10 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "PICO_BOARD": "pico2",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-      }
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PICO_SDK_PATH": "${sourceDir}/lib/pico-sdk"
+      },
+      "toolchainFile": "${sourceDir}/lib/pico-sdk/cmake/preload/toolchains/pico_arm_gcc.cmake"
     },
     {
       "name": "pico-release",
@@ -30,20 +32,33 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "PICO_BOARD": "pico2",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-      }
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PICO_SDK_PATH": "${sourceDir}/lib/pico-sdk"
+      },
+      "toolchainFile": "${sourceDir}/lib/pico-sdk/cmake/preload/toolchains/pico_arm_gcc.cmake"
     }
   ],
   "buildPresets": [
-    { "name": "host-debug", "configurePreset": "host-debug" },
-    { "name": "pico-debug", "configurePreset": "pico-debug" },
-    { "name": "pico-release", "configurePreset": "pico-release" }
+    {
+      "name": "host-debug",
+      "configurePreset": "host-debug"
+    },
+    {
+      "name": "pico-debug",
+      "configurePreset": "pico-debug"
+    },
+    {
+      "name": "pico-release",
+      "configurePreset": "pico-release"
+    }
   ],
   "testPresets": [
     {
       "name": "host",
       "configurePreset": "host-debug",
-      "output": { "outputOnFailure": true }
+      "output": {
+        "outputOnFailure": true
+      }
     }
   ]
 }

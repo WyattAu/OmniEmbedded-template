@@ -1,20 +1,16 @@
 cmake_minimum_required(VERSION 3.22)
 
 # Two personalities: HOST builds run the unit tests natively; PICO builds
-# the firmware against the pinned SDK. Presets in CMakePresets.json select.
-# Canonical pico order: fetch -> toolchain -> project() -> pico_sdk_init().
-if(NOT OMNI_HOST)
-  include(cmake/pico_fetch.cmake)
-  set(CMAKE_TOOLCHAIN_FILE "${PICO_SDK_PATH}/cmake/preload/toolchains/pico_arm_gcc.cmake")
-endif()
-
+# the firmware against the pinned SDK (scripts/ensure-pico-sdk.sh acquires
+# it; presets point the cross toolchain at it before project()).
 project(omni-firmware C CXX ASM)
 
 if(OMNI_HOST)
   enable_testing()
   add_subdirectory(tests)
 else()
-  include("${PICO_SDK_PATH}/pico_sdk_init.cmake")
+  # PICO_SDK_PATH comes from the preset cache (or the environment).
+  include("$PICO_SDK_PATH/pico_sdk_init.cmake")
   pico_sdk_init()
 
   add_executable(omni-firmware src/main.c)
