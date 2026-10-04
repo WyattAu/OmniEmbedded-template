@@ -1,6 +1,7 @@
-; 50% duty square wave on any pin — the canonical "your toolchain works" PIO.
+; 50% duty square wave on any pin - the canonical "your toolchain works" PIO.
+; Directives are dotted in pioasm (.wrap_target / .wrap).
 .program blink
-wrap_target
+.wrap_target
     set pins, 1 [31]
     set pins, 0 [31]
-wrap
+.wrap
