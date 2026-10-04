@@ -16,6 +16,6 @@ else()
   add_executable(omni-firmware src/main.c)
   pico_generate_pio_header(omni-firmware ${CMAKE_CURRENT_LIST_DIR}/pio/blink.pio)
   target_include_directories(omni-firmware PRIVATE include)
-  target_link_libraries(omni-firmware pico_stdlib)
+  target_link_libraries(omni-firmware pico_stdlib hardware_pio)
   pico_add_extra_outputs(omni-firmware) # UF2 + BIN + HEX + DIS
 endif()
