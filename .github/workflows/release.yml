@@ -26,9 +26,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
       - run: |
-    ./scripts/ensure-pico-sdk.sh
-    cmake --preset ${{ matrix.preset }}
-    cmake --build build/${{ matrix.preset }} -j"$(nproc)"
+          ./scripts/ensure-pico-sdk.sh
+          cmake --preset ${{ matrix.preset }}
+          cmake --build build/${{ matrix.preset }} -j"$(nproc)"
       - uses: actions/attest-build-provenance@v2
         with:
           subject-path: "build/${{ matrix.preset }}/omni-firmware.*"
