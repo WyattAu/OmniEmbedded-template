@@ -22,7 +22,7 @@
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "PICO_SDK_PATH": "${sourceDir}/lib/pico-sdk"
       },
-      "toolchainFile": "${sourceDir}/lib/pico-sdk/cmake/preload/toolchains/pico_arm_gcc.cmake"
+      "toolchainFile": "${sourceDir}/lib/pico-sdk/cmake/preload/toolchains/pico_arm_cortex_m33_gcc.cmake"
     },
     {
       "name": "pico-release",
@@ -35,7 +35,7 @@
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "PICO_SDK_PATH": "${sourceDir}/lib/pico-sdk"
       },
-      "toolchainFile": "${sourceDir}/lib/pico-sdk/cmake/preload/toolchains/pico_arm_gcc.cmake"
+      "toolchainFile": "${sourceDir}/lib/pico-sdk/cmake/preload/toolchains/pico_arm_cortex_m33_gcc.cmake"
     }
   ],
   "buildPresets": [
