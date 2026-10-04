@@ -1,4 +1,5 @@
 build/
+lib/
 *.uf2
 *.elf
 *.bin
