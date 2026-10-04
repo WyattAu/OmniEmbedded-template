@@ -14,6 +14,9 @@ else()
   pico_sdk_init()
 
   add_executable(omni-firmware src/main.c)
+  # picotool (UF2 generation) classifies by extension; Linux ELF outputs
+  # are extensionless by default, so name it *.elf explicitly.
+  set_target_properties(omni-firmware PROPERTIES SUFFIX ".elf")
   pico_generate_pio_header(omni-firmware ${CMAKE_CURRENT_LIST_DIR}/pio/blink.pio)
   target_include_directories(omni-firmware PRIVATE include)
   target_link_libraries(omni-firmware pico_stdlib hardware_pio)
