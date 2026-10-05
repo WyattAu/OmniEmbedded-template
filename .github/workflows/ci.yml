@@ -21,7 +21,7 @@ jobs:
   host:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: sudo apt-get update && sudo apt-get install -y cmake ninja-build
       - run: cmake --preset host-debug && cmake --build build/host-debug && ctest --preset host --test-dir build/host-debug
 
@@ -36,7 +36,7 @@ jobs:
           - board: pico2
             preset: pico2-release
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
       - run: |
           ./scripts/ensure-pico-sdk.sh
@@ -51,5 +51,5 @@ jobs:
   contract:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: ./scripts/check-contract.sh
