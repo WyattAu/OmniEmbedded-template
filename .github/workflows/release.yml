@@ -33,6 +33,6 @@ jobs:
         with:
           subject-path: "build/${{ matrix.preset }}/omni-firmware.*"
       - run: mkdir -p dist && cp build/${{ matrix.preset }}/omni-firmware.* dist/
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: dist/*
