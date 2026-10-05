@@ -29,7 +29,7 @@ jobs:
           ./scripts/ensure-pico-sdk.sh
           cmake --preset ${{ matrix.preset }}
           cmake --build build/${{ matrix.preset }} -j"$(nproc)"
-      - uses: actions/attest-build-provenance@v2
+      - uses: actions/attest-build-provenance@v4
         with:
           subject-path: "build/${{ matrix.preset }}/omni-firmware.*"
       - run: mkdir -p dist && cp build/${{ matrix.preset }}/omni-firmware.* dist/
