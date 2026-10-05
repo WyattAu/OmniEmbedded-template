@@ -43,7 +43,7 @@ jobs:
           cmake --preset ${{ matrix.preset }}
           cmake --build build/${{ matrix.preset }} -j"$(nproc)"
       - run: ./scripts/size.sh build/${{ matrix.preset }}/omni-firmware.elf
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: firmware-${{ matrix.board }}
           path: build/${{ matrix.preset }}/omni-firmware.*
