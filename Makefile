@@ -1,5 +1,5 @@
 # Thin wrapper over scripts/ — the same verbs in every Omni template.
-.PHONY: bench bench-update build test size flash lint contract ci clean
+.PHONY: bench bench-update repro build test size flash lint contract ci clean
 
 build:
 	./scripts/build.sh
@@ -21,6 +21,9 @@ contract:
 
 ## What CI gates before merge (mirror of .github/workflows/ci.yml):
 ci: contract build test size
+
+repro:
+	./scripts/repro-check.sh
 
 bench:
 	./scripts/bench-budget.sh
