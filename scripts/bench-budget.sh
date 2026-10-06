@@ -24,7 +24,7 @@ ram="$(printf '%s\n' "$report" | sed -n 's/.*ram(bss+data): \([0-9][0-9]*\).*/\1
   exit 1
 }
 
-printf 'flash-bytes\t%s\tbytes\tgate\nram-bytes\t%s\tbytes\tgate\n' "$flash" "$ram" > "$CURRENT"
+printf 'flash-bytes\t%s\tbytes\tgate\nram-bytes\t%s\tbytes\tgate\n' "$flash" "$ram" >"$CURRENT"
 
 python3 scripts/compare-bench.py "$BASELINE" "$CURRENT" \
   --threshold-pct "$THRESHOLD_PCT" "${UPDATE[@]+"${UPDATE[@]}"}"
