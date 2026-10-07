@@ -23,16 +23,16 @@ jobs:
             preset: pico2-release
     if: ${{ github.repository_owner == 'WyattAu' }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
       - run: |
           ./scripts/ensure-pico-sdk.sh
           cmake --preset ${{ matrix.preset }}
           cmake --build build/${{ matrix.preset }} -j"$(nproc)"
-      - uses: actions/attest-build-provenance@v4
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4
         with:
           subject-path: "build/${{ matrix.preset }}/omni-firmware.*"
       - run: mkdir -p dist && cp build/${{ matrix.preset }}/omni-firmware.* dist/
-      - uses: softprops/action-gh-release@v3
+      - uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3
         with:
           files: dist/*
